@@ -1,0 +1,69 @@
+1. Go to the home folder:
+    a. Downlaod the code from the Git repository as:
+        git clone ssh://username@scholiverse.com/data/git/repositories/internshala
+    b. Create a folder named 'internshala' under /var/www/
+    c. Copy the downloaded code from your local repository to /var/www/internshala/
+2. Virtual host:
+    a. Add "127.0.0.1       local.scholiverse.com" in the /etc/hosts file.
+    b. Create a new log folder /var/log/apache2/internshala/
+    c. Create a new virtual host file /etc/apache2/conf.d/internshala.conf and add the following content:
+    <VirtualHost *:80 >
+        AllowEncodedSlashes On
+        ServerAdmin anuj@ungineering.com
+        ServerName local.scholiverse.com
+        DocumentRoot /var/www/internshala/
+        <Directory /var/www/internshala/>
+                AllowOverride All
+                Options FollowSymLinks
+        </Directory>
+        CustomLog /var/log/apache2/internshala/access.log common
+        ErrorLog /var/log/apache2/internshala/error.log
+    </VirtualHost>
+
+    <VirtualHost *:80 >
+        ServerAdmin anuj@ungineering.com
+        ServerName localhost
+        ServerAlias 127.0.0.1
+        DocumentRoot /var/www/
+        <Directory /var/www/>
+                AllowOverride All
+                Options FollowSymLinks
+        </Directory>
+    </VirtualHost>
+3. php.ini [/etc/php5/apache2]:
+    short_open_tag = On
+    date.timezone = "Asia/Calcutta"
+4. config.php: Rename the 'config.php.default' file to 'config.php' and set the base_url variable.
+    $config['base_url']     = 'http://local.scholiverse.com/'; [local]
+    $config['base_url']     = 'http://test.scholiverse.com/'; [server]
+5. Database:
+    Import database: mysql -u root -p < internshala.sql 
+    database.php:  Rename the 'database.php.default' file to 'databse.php' and set the database details.
+6. install mod_rewrite:
+    sudo a2enmod rewrite [Ubuntu]
+    add "LoadModule rewrite_module modules/mod_rewrite.so" in httpd.conf [CentOS]
+7. .htacess: Make sure you have '.htaccess' file in the main internshala folder with the following content.
+RewriteEngine on
+RewriteCond $1 !^(static\/|index\.html|index\.php|images|robots\.txt|internfair)
+RewriteRule ^(.*)$ /index.php?/$1 [L]
+8. index.php:
+    $system_path = 'system';
+    $application_folder = 'application';
+9. config.php: Change path for logs
+    $config['log_path'] = BASEPATH . '../logs/';
+10. recaptcha - public/private keys
+    Add keys to base.php
+    Public Key: 6LdobtcSAAAAAP4pEIuFBgI3a9bsJ-0-853GPDEi
+    Private Key: 6LdobtcSAAAAALUMNIX0hWwwHSueN9benefzrhzv
+11. base.php: Change paths for lock and uplaod
+    $config['upload_dir'] = BASEPATH . '../uploads';
+    $config['lock_dir'] = BASEPATH . '../locks'; 
+12. Permissions:
+    sudo chmod -R a+rw internshala/
+    sudo chown -R www-data internshala/ [on local]
+    sudo chown -R apache:apache internshala/ [on server]
+13. Write permission for upload folder
+14. Execute: sudo apt-get install curl libcurl3 libcurl3-dev php5-curl php5-mcrypt
+15. Execute: sudo apt-get install php5-gd
+16. Restart apache server
+

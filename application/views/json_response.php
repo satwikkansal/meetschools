@@ -1,0 +1,1 @@
+<?=Meetschools\Helpers\Utils::json_encode($data)?>
