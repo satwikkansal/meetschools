@@ -7,7 +7,7 @@ sentiment_url = 'https://api.havenondemand.com/1/api/sync/analyzesentiment/v1?te
 
 from googleplaces import GooglePlaces, types, lang
 
-YOUR_API_KEY = 'AIzaSyBJuXDLb0vwzRtI8a_xZLEjxojylfJ6GiE'
+YOUR_API_KEY = YOUR_API_KEY_HERE
 
 google_places = GooglePlaces(YOUR_API_KEY)
 
