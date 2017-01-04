@@ -1,6 +1,8 @@
 # SchoolMate
 SchoolMate is the ultimate search engine for providing best school in your area. Moreover its a network for all the schools, students, and teachers where they can communicate with eachother. 
 
+  Developed as a project for **AngelHack New Delhi 2016**, This repository is no longer maintained.
+
 ##FEATURES 
 1. Nearest Schools to your location.
 2. Special SchoolMate score by doing sentiment analysis of the reviews of the schools scraped through the web.
